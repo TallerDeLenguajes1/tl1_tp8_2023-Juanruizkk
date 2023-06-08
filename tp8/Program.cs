@@ -60,7 +60,7 @@ internal class Program
         MostrarTareas(pendientes);
         System.Console.WriteLine("Se realizo alguna tarea?");
         string mover = System.Console.ReadLine();
-        while (string.Equals(mover, "si"))
+        while (mover == "si")
         {
             int idBusca = ValidaIngreso();
             var tareaCopiada = pendientes.Find(t => t.Id == idBusca);
@@ -73,8 +73,12 @@ internal class Program
             System.Console.WriteLine("Se realizo alguna otra tarea?");
             mover = System.Console.ReadLine();
         }
-        buscartareas(pendientes);
-
+        System.Console.WriteLine("Desea Buscar alguna tarea por descripcion");
+        mover = System.Console.ReadLine();
+        if (string.Equals(mover, "si"))
+        {
+            buscartareas(pendientes);
+        }
         void buscartareas(List<Tarea> lista)
         {
             System.Console.WriteLine("Ingrese la descripción de la tarea que busca:");
@@ -93,6 +97,19 @@ internal class Program
                 System.Console.WriteLine("No se encontró ninguna tarea con la descripción especificada.");
             }
         }
+        int sumar(List<Tarea> lista)
+        {
+            int suma = 0;
+            for (int i = 0; i < lista.Count; i++)
+            {
+                suma += lista[i].Duracion;
+            }
+            return suma;
+        }
+        int suma = sumar(realizadas);
+        var archivo = new StreamWriter("horastrabajadas.txt");
+        archivo.WriteLine("Cantidad de Tareas realizadas:" + suma);
+        archivo.Close();
     }
 
 }
